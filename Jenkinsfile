@@ -4,7 +4,7 @@ node {
     git url: 'https://github.com/grugrut/gultalis.git'
 
     stage 'Deploy'
-    withCredentials([string(credentialsid: 'DEPLOY_PATH', variable: 'DEPLOY_PATH')]) {
+    withCredentials([string(credentialsId: 'DEPLOY_PATH', variable: 'DEPLOY_PATH')]) {
       sh 'rsync -vrlptD --delete ${WORKSPACE}/ ${DEPLOY_PATH}/gultalis/'
     }
     sh 'sudo gultails restart'
