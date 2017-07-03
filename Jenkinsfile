@@ -4,7 +4,10 @@ node {
     git url: 'https://github.com/grugrut/gultalis.git'
 
     stage 'Deploy'
-    sh 'ls -l'
+    withCredentials([string(credentialsid: 'DEPLOY_PATH', variable: 'DEPLOY_PATH')]) {
+      sh 'rsync -vrlptD --delete ${WORKSPACE}/ ${DEPLOY_PATH}/gultalis/'
+    }
+    sh 'sudo gultails restart'
   } catch (e) {
     err_msg = "${e}"
     currentBuild.result = "FAILURE"
