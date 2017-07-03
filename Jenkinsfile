@@ -1,3 +1,5 @@
+def err_msg = ""
+
 node {
   try {
     stage 'Checkout'
@@ -6,7 +8,9 @@ node {
     stage 'Deploy'
     withCredentials([string(credentialsId: 'DEPLOY_PATH', variable: 'DEPLOY_PATH')]) {
       sh 'chmod +x bin/hubot'
-      sh 'rsync -vrlptD --delete ${WORKSPACE}/ ${DEPLOY_PATH}/gultalis/'
+      sh 'chmod g+w .'
+      sh 'chmod -R g+r .' 
+      sh 'rsync -vrlptD --delete --exclude="node_modules" --exclude=".*" ${WORKSPACE}/ ${DEPLOY_PATH}/gultalis/'
     }
     sh 'sudo /sbin/service gultalis restart'
   } catch (e) {
