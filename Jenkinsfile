@@ -26,5 +26,3 @@ def notify(msg) {
   def slack_msg = "job ${env.JOB_NAME}[No.${env.BUILD_NUMBER}] was builded ${currentBuild.result}. ${detail_link}\n\n${msg}"
   slackSend color: "${slack_color}", message: "${slack_msg}"
 }
-
-}
