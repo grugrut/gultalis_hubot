@@ -5,9 +5,10 @@ node {
 
     stage 'Deploy'
     withCredentials([string(credentialsId: 'DEPLOY_PATH', variable: 'DEPLOY_PATH')]) {
+      sh 'chmod +x bin/hubot'
       sh 'rsync -vrlptD --delete ${WORKSPACE}/ ${DEPLOY_PATH}/gultalis/'
     }
-    sh 'sudo gultails restart'
+    sh 'sudo /sbin/service gultalis restart'
   } catch (e) {
     err_msg = "${e}"
     currentBuild.result = "FAILURE"
