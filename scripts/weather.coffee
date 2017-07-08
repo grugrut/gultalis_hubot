@@ -32,10 +32,10 @@ module.exports = (robot) ->
       message += $('p.pict').text() + "\n"
       message += "最高気温: " + $('ul.temp li.high em').text() + "度 最低気温: " +  $('ul.temp li.low em').text() + "度\n"
       message += "降水確率:\n"
-      message += $('tr.time td:nth-child(2)').text() + "\t" + $('tr.precip td:nth-child(2)').text() + "\n"
-      message += $('tr.time td:nth-child(3)').text() + "\t" + $('tr.precip td:nth-child(3)').text() + "\n"
-      message += $('tr.time td:nth-child(4)').text() + "\t" + $('tr.precip td:nth-child(4)').text() + "\n"
-      message += $('tr.time td:nth-child(5)').text() + "\t" + $('tr.precip td:nth-child(5)').text() + "\n"
+      message += " 0- 6 " + $('tr.precip td:nth-child(2)').text() + "\n"
+      message += " 6-12 " + $('tr.precip td:nth-child(3)').text() + "\n"
+      message += "12-18 " + $('tr.precip td:nth-child(4)').text() + "\n"
+      message += "18-24 " + $('tr.precip td:nth-child(5)').text() + "\n"
       message += $('p.pict img').attr('src')
       send '#news', message
 
