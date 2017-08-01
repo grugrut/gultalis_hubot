@@ -5,6 +5,7 @@
   "author": "grugrut <grugruglut+github@gmail.com>",
   "description": "A bot for me(grugrut)",
   "dependencies": {
+    "canvas": "^1.6.5",
     "cheerio": "^1.0.0-rc.2",
     "cron": "^1.2.1",
     "hubot": "^2.19.0",
@@ -20,6 +21,7 @@
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.1",
     "hubot-slack": "^4.3.4",
+    "mktemp": "^0.4.0",
     "request": "^2.81.0"
   },
   "engines": {
