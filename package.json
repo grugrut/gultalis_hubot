@@ -6,6 +6,8 @@
   "description": "A bot for me(grugrut)",
   "dependencies": {
     "canvas": "^1.6.5",
+    "chart.js": "^2.6.0",
+    "chartjs-node": "^1.4.3",
     "cheerio": "^1.0.0-rc.2",
     "cron": "^1.2.1",
     "hubot": "^2.19.0",
