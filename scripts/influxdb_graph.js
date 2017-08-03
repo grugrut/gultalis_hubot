@@ -14,20 +14,25 @@ var ChartjsNode = require('chartjs-node');
 var path = require('path');
 var fs = require('fs');
 var request = require('request');
+var cronJob = require('cron').CronJob;
 
 module.exports = function(robot) {
     robot.respond(/graph/i, function(msg) {
         createGraph('used_percent', 'mem');
     });
+    new cronJob('0 0 0,12 * * *', function() {
+      return createGraph('used_percent', 'mem');
+    }).start();
 };
 
 function createGraph(key, name) {
     var chartNode = new ChartjsNode(400, 300);
 
-    request.get({url:'http://localhost:8086/query?pretty=true&db=monitoring&q='+encodeURIComponent('select mean(' + key +') from ' + name + ' where time > now() - 24h GROUP BY (10m)')},
+    request.get({url:'http://localhost:8086/query?pretty=true&db=monitoring&q='+encodeURIComponent('select mean(' + key +') from ' + name + ' where time > now() - 24h GROUP BY TIME(10m)')},
                 function(error, response, body) {
                     if (error) {
                         console.log(error);
+                        console.log(response);
                         return;
                     }
                     var parsedJson = JSON.parse(body);
