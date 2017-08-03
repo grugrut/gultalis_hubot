@@ -40,7 +40,7 @@ function createGraph(key, name) {
                     var data = [];
                     for (let value of parsedJson['results'][0]['series'][0]['values']) {
                         var d = new Date(value[0]);
-                        label.push(d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
+                        label.push(("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2));
                         data.push(value[1]);
                     }
                     
