@@ -15,48 +15,22 @@ var path = require('path');
 var fs = require('fs');
 var request = require('request');
 
-targetJson = `{
-    "results": [
-        {
-            "statement_id": 0,
-            "series": [
-                {
-                    "name": "mem",
-                    "columns": [
-                        "time",
-                        "used_percent"
-                    ],
-                    "values": [
-                        [
-                            "2017-08-02T12:38:00Z",
-                            80.14317538453697
-                        ],
-                        [
-                            "2017-08-02T12:38:30Z",
-                            80.25594033438736
-                        ],
-                        [
-                            "2017-08-02T12:39:00Z",
-                            80.24192435192009
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}`;
-
 module.exports = function(robot) {
     robot.respond(/graph/i, function(msg) {
-        var chartNode = new ChartjsNode(400, 200);
+        var chartNode = new ChartjsNode(400, 300);
 
-        request.get({url:'http://localhost:8086/query?pretty=true --data-urlencode "db=monitoring" --data-urlencode "q=select used_percent from mem where time > now() - 24h"'},
+        request.get({url:'http://localhost:8086/query?pretty=true&db=monitoring&q='+encodeURIComponent('select used_percent from mem where time > now() - 24h')},
                     function(error, response, body) {
-                        var parsedJson = JSON.parse(targetJson);
+                        if (error) {
+                            console.log(error);
+                            return;
+                        }
+                        var parsedJson = JSON.parse(body);
                         var label = [];
                         var data = [];
                         for (let value of parsedJson['results'][0]['series'][0]['values']) {
-                            label.push(value[0]);
+                            var d = new Date(value[0]);
+                            label.push(d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
                             data.push(value[1]);
                         }
                         
