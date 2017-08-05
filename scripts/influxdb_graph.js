@@ -21,7 +21,7 @@ module.exports = function(robot) {
         createGraph('used_percent', 'mem');
     });
     new cronJob('0 0 0,12 * * *', function() {
-      return createGraph('used_percent', 'mem');
+        createGraph('used_percent', 'mem');
     }).start();
 };
 
@@ -48,6 +48,7 @@ function createGraph(key, name) {
                         type: 'line',
                         data: {
                             labels: label,
+                            pointRadius: 0,
                             datasets: [{
                                 label: parsedJson['results'][0]['series'][0]['name'],
                                 data: data,
